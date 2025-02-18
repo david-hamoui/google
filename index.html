@@ -5,18 +5,37 @@
     </script>
 </div>
 
-<!-- Search Results -->
-<div class="gcse-searchresults-only">
+<!-- Search Results in an iframe -->
+<iframe id="results-frame" style="width: 100%; height: 80vh; border: none;">
     <div class="gcse-searchresults-only"></div>
-</div>
-
-
-
-
-
-
+    
+</iframe>
 
 
 
 
 <script async src="https://cse.google.com/cse.js?cx=b2da4241cf16f4a0d"></script>
+
+<script>
+    // Function to listen for search queries and load results in the iframe
+    function loadResults(query) {
+      const iframe = document.getElementById("results-frame");
+      const cx = "b2da4241cf16f4a0d";
+      const url = `https://cse.google.com/cse?cx=${cx}&q=${encodeURIComponent(query)}`;
+      iframe.src = url;
+    }
+  
+    // Listen for input changes and trigger the search
+    window.addEventListener("load", () => {
+      const searchBox = document.querySelector(".gsc-input");
+      if (searchBox) {
+        searchBox.addEventListener("keypress", (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            loadResults(searchBox.value);
+          }
+        });
+      }
+    });
+  </script>
+  
